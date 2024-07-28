@@ -1,8 +1,8 @@
-# Load necessary libraries
+# Load libraries
 library(ggplot2)
 library(reshape2)
 
-# Sample data based on your table (just a small subset for demonstration)
+# Sample data (just a small subset for demonstration)
 data <- data.frame(
   Barcode = factor(1:10),
   'FALSE' = c(231650, 44654, 51912, 45768, 34088, 36252, 59338, 40705, 28700, 45664),
@@ -28,7 +28,7 @@ ggplot(data_melted, aes(x = Barcode, y = Count, fill = Assignment)) +
 library(ggplot2)
 library(reshape2)
 
-# Full data based on your table
+# Full data 
 data <- data.frame(
   Barcode = factor(1:96),
   `FALSE` = c(231650, 44654, 51912, 45768, 34088, 36252, 59338, 40705, 28700, 45664,
