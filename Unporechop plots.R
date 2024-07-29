@@ -8,7 +8,7 @@ read_counts$cell_number <- as.numeric(gsub(".*_(\\d+)", "\\1", read_counts$barco
 read_counts$condition <- ifelse(read_counts$cell_number %in% 1:24, "Uninfected",
                                 ifelse(read_counts$cell_number %in% 25:48, "RSV",
                                        ifelse(read_counts$cell_number %in% 49:72, "RSV+DAP",
-                                              ifelse(read_counts$cell_number %in% 73:96, "DAP",
+                                              ifelse(read_counts$cell_number %in% 73:92, "DAP",
                                                      "Unknown"))))
 
 read_counts <- read_counts[read_counts$condition != "Unknown", ]
@@ -20,7 +20,7 @@ violin_plot <- ggplot(read_counts, aes(x=condition, y=count, fill=condition)) +
   theme_minimal() +
   xlab("Condition") +
   ylab("Read Count (log10)") +
-  ggtitle("Violin Plot of Read Counts by Condition")
+  ggtitle("RSV Read Counts by Condition")
 
 # Save the plot
 ggsave("violin_plot.png", plot=violin_plot)
