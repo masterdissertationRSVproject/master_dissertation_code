@@ -1,10 +1,7 @@
-# Load library
 library(ggplot2)
 
-# Read data from the file
 read_counts <- read.table("mapped_read_counts.txt", header=FALSE, col.names=c("barcode", "count"))
 
-# Extract numeric part of barcode identifiers
 read_counts$cell_number <- as.numeric(gsub(".*_(\\d+)", "\\1", read_counts$barcode))
 
 # Assign conditions based on cell numbers
@@ -14,7 +11,6 @@ read_counts$condition <- ifelse(read_counts$cell_number %in% 1:24, "Uninfected",
                                               ifelse(read_counts$cell_number %in% 73:96, "DAP",
                                                      "Unknown"))))
 
-# Filter out "Unknown" condition 
 read_counts <- read_counts[read_counts$condition != "Unknown", ]
 
 # Create violin plot
