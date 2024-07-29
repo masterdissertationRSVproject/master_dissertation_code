@@ -1,4 +1,3 @@
-# Load libraries
 if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 BiocManager::install(c("GenomicFeatures", "GenomicAlignments", "Gviz", "Rsamtools", "edgeR", "pheatmap", "RColorBrewer", "ggplot2"))
@@ -12,52 +11,39 @@ library(pheatmap)
 library(RColorBrewer)
 library(ggplot2)
 
-# Set the paths 
 bam_file <- "path_to_my_file/barcode_67.sorted_mapped.bam"
 gff3_file <- "path_to_annotation_file/Genes.gff3"
 
-# Create a transcript database from the GFF3 file
 txdb <- makeTxDbFromGFF(gff3_file, format="gff3")
 
-# Extract gene information from the database
 genes <- genes(txdb)
 
-# Read the BAM file
 param <- ScanBamParam(flag = scanBamFlag(isUnmappedQuery = FALSE))
 bam_data <- readGAlignments(bam_file, param=param)
 
-# Summarise overlaps to get read counts for each gene
 se <- summarizeOverlaps(features=genes, reads=bam_data, mode="Union", ignore.strand=TRUE)
 
-# Convert to a simple matrix of counts
 count_matrix <- assay(se)
 
 # Normalise the counts using CPM (Counts Per Million) 
 cpm_matrix <- cpm(count_matrix)
 
-# Create a dataframe with gene names and CPM values
 gene_names <- rownames(count_matrix)
 expression_data <- data.frame(Gene=gene_names, CPM=cpm_matrix)
 
-# Print the expression data
 print(expression_data)
 
-# Visualise the gene expression profile
-# Create a plot track for the genome
+#Visualise the gene expression profiles
 genome_track <- GenomeAxisTrack()
 
-# Create a plot track for the gene regions
 gene_track <- GeneRegionTrack(txdb, transcriptAnnotation="gene")
 
-# Define the chromosome and coordinate range explicitly
 chromosome <- "RSV_genome"  
 from <- 1
 to <- max(end(genes))
 
-# Create a plot track for the BAM alignments
 alignments_track <- AlignmentsTrack(bam_file, isPaired=FALSE, chromosome=chromosome)
 
-# Plot tracks
 plotTracks(list(genome_track, gene_track, alignments_track), from=from, to=to)
 
 # Bar plot for selected genes
