@@ -2,7 +2,7 @@
 library(ggplot2)
 library(reshape2)
 
-# Load the full data  
+# Load the full data obtained from the demultiplex html file 
 data <- data.frame(
   Barcode = factor(1:96),
   `FALSE` = c(231650, 44654, 51912, 45768, 34088, 36252, 59338, 40705, 28700, 45664,
