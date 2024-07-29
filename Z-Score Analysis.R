@@ -1,5 +1,5 @@
 #codes incorporating the 0 value 
-# Load libraries
+
 library(MASS)
 library(ggplot2)
 library(pscl)  # For zero-inflated models as there were some 0 value
@@ -11,14 +11,12 @@ read_counts <- data.frame(
 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 2, 1, 1, 3, 1, 1, 0, 5, 1, 0, 0, 1, 0, 2, 2, 0, 0, 4, 0, 1, 1, 0, 0, 0, 3, 0, 0, 0, 1, 0, 1, 0, 10, 1, 0, 5872, 0, 1, 0, 2, 0, 1, 1, 0, 0, 75, 16, 4099, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 5, 0, 3, 0, 0, 0, 0
 )
 )
-# Create a vector to indicate which barcode is the uninfected 
+
 read_counts$infected <- ifelse(read_counts$cell_number %in% c(1:24, 73:96), "Uninfected", "Infected")
 
-# Separate the data
 uninfected_counts <- read_counts[read_counts$infected == "Uninfected", ]
 infected_counts <- read_counts[read_counts$infected == "Infected", ]
 
-# Add a small constant to avoid zero counts
 uninfected_counts$count <- uninfected_counts$count + 1
 
 # Fit a Negative Binomial model to filtered uninfected counts
