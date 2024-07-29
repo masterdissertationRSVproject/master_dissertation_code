@@ -1,4 +1,4 @@
-# Load necessary library
+# Load library
 library(ggplot2)
 
 # Read data from the file
@@ -8,13 +8,13 @@ read_counts <- read.table("mapped_read_counts.txt", header=FALSE, col.names=c("b
 read_counts$cell_number <- as.numeric(gsub(".*_(\\d+)", "\\1", read_counts$barcode))
 
 # Assign conditions based on cell numbers
-read_counts$condition <- ifelse(read_counts$cell_number %in% 1:24, "Uninfected Untreated",
-                                ifelse(read_counts$cell_number %in% 25:48, "Infected Untreated",
-                                       ifelse(read_counts$cell_number %in% 49:72, "Infected Treated",
-                                              ifelse(read_counts$cell_number %in% 73:96, "Uninfected Treated",
+read_counts$condition <- ifelse(read_counts$cell_number %in% 1:24, "Uninfected",
+                                ifelse(read_counts$cell_number %in% 25:48, "RSV",
+                                       ifelse(read_counts$cell_number %in% 49:72, "RSV+DAP",
+                                              ifelse(read_counts$cell_number %in% 73:96, "DAP",
                                                      "Unknown"))))
 
-# Filter out "Unknown" condition (optional, if needed)
+# Filter out "Unknown" condition 
 read_counts <- read_counts[read_counts$condition != "Unknown", ]
 
 # Create violin plot
