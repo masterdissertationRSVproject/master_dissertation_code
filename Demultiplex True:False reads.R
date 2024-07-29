@@ -2,33 +2,7 @@
 library(ggplot2)
 library(reshape2)
 
-# Sample data (just a small subset for demonstration)
-data <- data.frame(
-  Barcode = factor(1:10),
-  'FALSE' = c(231650, 44654, 51912, 45768, 34088, 36252, 59338, 40705, 28700, 45664),
-  'TRUE' = c(412439, 103222, 59462, 68540, 75633, 80385, 103512, 69630, 55380, 115684)
-)
-
-# Melt the data for ggplot2
-data_melted <- melt(data, id.vars = "Barcode", variable.name = "Assignment", value.name = "Count")
-
-# Stacked Bar Plot
-ggplot(data_melted, aes(x = Barcode, y = Count, fill = Assignment)) +
-  geom_bar(stat = "identity") +
-  labs(title = "Read Assignment per Barcode", x = "Barcode", y = "Read Count") +
-  theme_minimal()
-
-# Grouped Bar Plot
-ggplot(data_melted, aes(x = Barcode, y = Count, fill = Assignment)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(title = "Read Assignment per Barcode", x = "Barcode", y = "Read Count") +
-  theme_minimal()
-
-# Load necessary libraries
-library(ggplot2)
-library(reshape2)
-
-# Full data 
+# Load the full data  
 data <- data.frame(
   Barcode = factor(1:96),
   `FALSE` = c(231650, 44654, 51912, 45768, 34088, 36252, 59338, 40705, 28700, 45664,
